@@ -23,7 +23,7 @@ class Collection{
         void animalsAge();
         double animalFoodCost();
         double animalPayoff();
-        bool hayAdulto();
+        int hayAdulto();
         int getnAnimals();
 
 

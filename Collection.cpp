@@ -104,11 +104,11 @@ double Collection::animalPayoff(){
     return runningTotal;
 }
 
-bool Collection::hayAdulto(){
-    bool adult = false;
+int Collection::hayAdulto(){
+    int adult = 0;
     for (int i = 0; i < nAnimals; i++){
         if (collect[i].isAdult()){
-            adult = true;
+            adult++;
         }
     }
     return adult;

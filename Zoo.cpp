@@ -106,7 +106,8 @@ void Zoo::zooEvent(){
     //Accessed 10.17.19
     srand(time(NULL));
     //int nRand = (rand() % 4) + 1;
-    int nRand = 1; //### testing death event
+    //int nRand = 1; //testing death event
+    int nRand = 2; //testing attendance event
     switch(nRand){
         case 1: sicknessEvent();
         break;
@@ -173,6 +174,7 @@ void Zoo::sicknessEvent(){
     cout << "Oh no! Your critter got sick and died!\n";
     srand(time(NULL));
     int nRand = (rand() % 3) + 1;
+    //###This assumes that there is at least one of every animal
     if (nRand == 1){
         cout << "A tiger has died!\n" << endl;
         tigerCollect.animalDies();
@@ -191,7 +193,15 @@ void Zoo::sicknessEvent(){
 }
 
 void Zoo::attendanceEvent(){
+    srand(time(NULL));
+    double totalBonus = 0;
     cout << "Memorial Day weekend boosts attendence!\n";
+    int nTigers = tigerCollect.getnAnimals();
+    for (int i = 0; i < nTigers; i++){
+        totalBonus += (rand() % 250) + 250;
+    }
+    cout << "Your zoo has received a bonus of $" <<totalBonus <<"!\n";
+    account.makeDeposit(totalBonus);
 }
 
 void Zoo::birthEvent(){
