@@ -8,7 +8,6 @@
 #include "getNumberBetween.hpp"
 #include <cstdlib>
 #include <ctime>
-#include "getNumberBetween.hpp"
 
 using std::cout;
 using std::endl;
@@ -98,6 +97,7 @@ void Zoo::zooMorning(int day){
     cout << "Your food cost for today is $" << foodCost <<"."<<endl;
     account.makeWithdrawal(foodCost);
     showBankBalance();
+    cout << "----------------------------\n";
 }
 
 void Zoo::zooEvent(){
@@ -108,14 +108,17 @@ void Zoo::zooEvent(){
     switch(nRand){
         case 1: sicknessEvent();
         break;
+        break;
         case 2: attendanceEvent();
         break;
+        break;
         case 3: birthEvent();
+        break;
         case 4: 
-            cout << "A quiet day at the zoo...\n";
-            cout << "Random number: " <<nRand <<endl;
+            cout << "It was a quiet day at the zoo...\n";
         break;
     }
+    cout << "-----------------------------\n";
 }
 
 void Zoo::zooDay(int day){
@@ -123,33 +126,39 @@ void Zoo::zooDay(int day){
     zooEvent();
     zooEvening();
     cout << "Would you like to play another day?\n1. Continue\n2. Quit" << endl;
-    int choice = getNumberBetween(1,2);
+    int choice = getNumberBetween(1, 2);
     if (choice == 1){
         day++;
         zooDay(day);
     }
 
 }
+void Zoo::animalPurchase(){
+    cout << "Great! You're purchasing an animal!\n";
+}
 
 void Zoo::zooEvening(){
-    cout<<"Good night!\n";
-
+    cout << "\nTime to close up for the day!\n";
+    cout << "Today's profit: $" << endl;
+    cout << "Total funds available: $" <<endl;
+    cout << "Would you like to purchase an adult animal?\n1. Yes\n2. No\n";
+    int choice = getNumberBetween(1,2);
+    if (choice == 1){
+        animalPurchase();
+    }
+    cout << "Good night!\n";
 }
 
 void Zoo::sicknessEvent(){
     cout << "Oh no! Your critter is sick!\n";
-
-
 }
 
 void Zoo::attendanceEvent(){
     cout << "Memorial Day weekend boosts attendence!\n";
-
 }
 
 void Zoo::birthEvent(){
     cout << "Please welcome a new critter!\n";
-
 }
 
 void Zoo::showAnimalCosts(){

@@ -40,6 +40,7 @@ class Zoo{
         void showAnimalCosts();
         void showBankBalance();
         void zooDay(int day);
+        void animalPurchase();
         
 };
 

@@ -2,5 +2,6 @@
 #define GETNUMBERBETWEEN_HPP
 
 int getNumberBetween(int, int);
+int getValidInt();
 
 #endif
