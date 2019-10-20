@@ -91,6 +91,7 @@ double Zoo::getTotalFoodCost(){
 }
 
 void Zoo::zooMorning(int day){
+    allAnimalsAge();
     cout << "\n--------Day " <<day <<"--------\n";
     cout << "Good morning!\n";
     double foodCost = getTotalFoodCost();
@@ -104,7 +105,8 @@ void Zoo::zooEvent(){
     //srand use adapted from http://www.cplusplus.com/reference/cstdlib/srand/
     //Accessed 10.17.19
     srand(time(NULL));
-    int nRand = (rand() % 4) + 1;
+    //int nRand = (rand() % 4) + 1;
+    int nRand = 1; //### testing death event
     switch(nRand){
         case 1: sicknessEvent();
         break;
@@ -151,7 +153,6 @@ void Zoo::animalPurchase(){
         addTurtle(tortuga);
         account.makeWithdrawal(tortuga.getCost());
     }
-
 }
 
 void Zoo::zooEvening(){
@@ -159,7 +160,7 @@ void Zoo::zooEvening(){
     double payoff = getTodaysPayoff();
     account.makeDeposit(payoff);
     cout << "Today's profit: $" << payoff << endl;
-    cout << "Total funds available: $"<< account.getBalance() << endl;
+    showBankBalance();
     cout << "\nWould you like to purchase an adult animal?\n1. Yes\n2. No\n";
     int choice = getNumberBetween(1, 2);
     if (choice == 1){
@@ -169,7 +170,24 @@ void Zoo::zooEvening(){
 }
 
 void Zoo::sicknessEvent(){
-    cout << "Oh no! Your critter is sick!\n";
+    cout << "Oh no! Your critter got sick and died!\n";
+    srand(time(NULL));
+    int nRand = (rand() % 3) + 1;
+    if (nRand == 1){
+        cout << "A tiger has died!\n" << endl;
+        tigerCollect.animalDies();
+        tigerCollect.viewCollection();
+    }
+    if (nRand == 2){
+        cout << "A penguin has died!\n" << endl;
+        penguinCollect.animalDies();
+        penguinCollect.viewCollection();
+    }
+    if (nRand == 3){
+        cout << "A turtle has died!\n" << endl;
+        turtleCollect.animalDies();
+        turtleCollect.viewCollection();
+    }
 }
 
 void Zoo::attendanceEvent(){

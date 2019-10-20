@@ -50,6 +50,12 @@ void Collection::animalDies(int index){
     nAnimals --;
 }
 
+void Collection::animalDies(){
+    srand(time(NULL));
+    int nRand = (rand() % nAnimals);
+    animalDies(nRand);    
+}
+
 void Collection::acquireAnimal(Animal newGuy){
     if (nAnimals == arraySize){
         resizeArray();

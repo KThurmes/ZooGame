@@ -16,6 +16,7 @@ class Collection{
     public:
         Collection();
         void animalDies(int index);
+        void animalDies();
         void acquireAnimal(Animal);
         void viewCollection();
         void freeTheAnimals();
