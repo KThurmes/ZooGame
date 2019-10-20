@@ -28,7 +28,6 @@ class Zoo{
         }
         void freeTheAnimals();
         void allAnimalsAge();
-        void tigerBaby();
         void zooSetup();
         double getTotalFoodCost();
         void zooMorning(int);

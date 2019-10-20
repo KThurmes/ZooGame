@@ -134,7 +134,24 @@ void Zoo::zooDay(int day){
 
 }
 void Zoo::animalPurchase(){
-    cout << "Great! You're purchasing an animal!\n";
+    cout << "Great! You're purchasing an animal!\nWhich critter would you like to purchase?\n1. Tiger\n2. Penguin\n3. Turtle\n";
+    int choice = getNumberBetween(1, 3);
+    if (choice == 1){
+        Tiger tigre(3);
+        addTiger(tigre);
+        account.makeWithdrawal(tigre.getCost());
+    }
+    if (choice == 2){
+        Penguin pinguino(3);
+        addPenguin(pinguino);
+        account.makeWithdrawal(pinguino.getCost());
+    }
+    if (choice == 3){
+        Turtle tortuga(3);
+        addTurtle(tortuga);
+        account.makeWithdrawal(tortuga.getCost());
+    }
+
 }
 
 void Zoo::zooEvening(){
