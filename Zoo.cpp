@@ -131,8 +131,8 @@ void Zoo::zooDay(int day){
         day++;
         zooDay(day);
     }
-
 }
+
 void Zoo::animalPurchase(){
     cout << "Great! You're purchasing an animal!\nWhich critter would you like to purchase?\n1. Tiger\n2. Penguin\n3. Turtle\n";
     int choice = getNumberBetween(1, 3);
@@ -156,10 +156,12 @@ void Zoo::animalPurchase(){
 
 void Zoo::zooEvening(){
     cout << "\nTime to close up for the day!\n";
-    cout << "Today's profit: $" << endl;
-    cout << "Total funds available: $" <<endl;
-    cout << "Would you like to purchase an adult animal?\n1. Yes\n2. No\n";
-    int choice = getNumberBetween(1,2);
+    double payoff = getTodaysPayoff();
+    account.makeDeposit(payoff);
+    cout << "Today's profit: $" << payoff << endl;
+    cout << "Total funds available: $"<< account.getBalance() << endl;
+    cout << "\nWould you like to purchase an adult animal?\n1. Yes\n2. No\n";
+    int choice = getNumberBetween(1, 2);
     if (choice == 1){
         animalPurchase();
     }
@@ -188,5 +190,12 @@ void Zoo::showAnimalCosts(){
 
 void Zoo::showBankBalance(){
     cout << "The zoo has a bank balance of $" << account.getBalance()<< "."<<endl;
+}
 
+double Zoo::getTodaysPayoff(){
+    double totalPayoff = 0;
+    totalPayoff += tigerCollect.animalPayoff();
+    totalPayoff += turtleCollect.animalPayoff();
+    totalPayoff += penguinCollect.animalPayoff();
+    return totalPayoff;
 }
