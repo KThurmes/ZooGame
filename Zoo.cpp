@@ -3,7 +3,7 @@
 #include "Tiger.hpp"
 #include "Penguin.hpp"
 #include "Turtle.hpp"
-#include "Collection.hpp"
+#include "Exhibit.hpp"
 #include <iostream>
 #include "getNumberBetween.hpp"
 #include <cstdlib>
@@ -17,27 +17,27 @@ Zoo::Zoo(){
 }
 
 void Zoo::addTiger(Animal& tigre){
-    tigerCollect.acquireAnimal(tigre);
+    tigerExhibit.acquireAnimal(tigre);
 }
 
 void Zoo::addPenguin(Animal& pinguino){
-    penguinCollect.acquireAnimal(pinguino);
+    penguinExhibit.acquireAnimal(pinguino);
 }
 
 void Zoo::addTurtle(Animal& tortuga){
-    turtleCollect.acquireAnimal(tortuga);
+    turtleExhibit.acquireAnimal(tortuga);
 }
 
 void Zoo::freeTheAnimals(){
-    tigerCollect.freeTheAnimals();
-    penguinCollect.freeTheAnimals();
-    turtleCollect.freeTheAnimals();
+    tigerExhibit.freeTheAnimals();
+    penguinExhibit.freeTheAnimals();
+    turtleExhibit.freeTheAnimals();
 }
 
 void Zoo::allAnimalsAge(){
-    tigerCollect.animalsAge();
-    penguinCollect.animalsAge();
-    turtleCollect.animalsAge();
+    tigerExhibit.animalsAge();
+    penguinExhibit.animalsAge();
+    turtleExhibit.animalsAge();
 }
 
 void Zoo::zooSetup(){
@@ -50,7 +50,7 @@ void Zoo::zooSetup(){
     //Ask how many Tigers player would like to buy
     cout << "How many tigers would you like to start your zoo with?\n";
     int nTigers = getNumberBetween(1,2);
-    //Add animals to collection
+    //Add animals to Exhibit
     Tiger tigre(1);
     for (int i = 0; i < nTigers; i++){
         addTiger(tigre);
@@ -62,7 +62,7 @@ void Zoo::zooSetup(){
     //Ask how many Penguins player would like to buy
     cout << "How many penguins would you like to start your zoo with?\n";
     int nPenguins = getNumberBetween(1,2);
-    //Add animals to collection
+    //Add animals to Exhibit
     Penguin pinguino(1);
     for (int i = 0; i < nPenguins; i++){
         addPenguin(pinguino);
@@ -73,7 +73,7 @@ void Zoo::zooSetup(){
     //Ask how many Turtles player would like to buy
     cout << "How many turtles would you like to start your zoo with?\n";
     int nTurtles = getNumberBetween(1,2);
-    //Add animals to collection
+    //Add animals to Exhibit
     Turtle tortuga(1);
     for (int i = 0; i < nTurtles; i++){
         addTurtle(tortuga);
@@ -84,9 +84,9 @@ void Zoo::zooSetup(){
 
 double Zoo::getTotalFoodCost(){
     double totalCost = 0;
-    totalCost += tigerCollect.animalFoodCost();
-    totalCost += turtleCollect.animalFoodCost();
-    totalCost += penguinCollect.animalFoodCost();
+    totalCost += tigerExhibit.animalFoodCost();
+    totalCost += turtleExhibit.animalFoodCost();
+    totalCost += penguinExhibit.animalFoodCost();
     return totalCost;
 }
 
@@ -176,18 +176,18 @@ void Zoo::sicknessEvent(){
     //###This assumes that there is at least one of every animal
     if (nRand == 1){
         cout << "A tiger has died!\n" << endl;
-        tigerCollect.animalDies();
-        tigerCollect.viewCollection();
+        tigerExhibit.animalDies();
+        tigerExhibit.viewExhibit();
     }
     if (nRand == 2){
         cout << "A penguin has died!\n" << endl;
-        penguinCollect.animalDies();
-        penguinCollect.viewCollection();
+        penguinExhibit.animalDies();
+        penguinExhibit.viewExhibit();
     }
     if (nRand == 3){
         cout << "A turtle has died!\n" << endl;
-        turtleCollect.animalDies();
-        turtleCollect.viewCollection();
+        turtleExhibit.animalDies();
+        turtleExhibit.viewExhibit();
     }
 }
 
@@ -195,7 +195,7 @@ void Zoo::attendanceEvent(){
     srand(time(NULL));
     double totalBonus = 0;
     cout << "Memorial Day weekend boosts attendence!\n";
-    int nTigers = tigerCollect.getnAnimals();
+    int nTigers = tigerExhibit.getnAnimals();
     for (int i = 0; i < nTigers; i++){
         totalBonus += (rand() % 250) + 250;
     }
@@ -210,31 +210,36 @@ void Zoo::birthEvent(){
     int nBabies = 0;
     //###This assumes that there is at least one adult of every animal
     if (nRand == 1){
-        cout << "A tiger has given birth!\n" << endl;
-        nBabies = Tiger::getnBabies();
-        for (int i = 0; i <nBabies; i++){
-            Tiger tigre(0);
-            tigerCollect.acquireAnimal(tigre);
+        if(tigerExhibit.hayAdulto()){
+            cout << "A tiger has given birth!\n" << endl;
+            nBabies = Tiger::getnBabies();
+            for (int i = 0; i <nBabies; i++){
+                Tiger tigre(0);
+                tigerExhibit.acquireAnimal(tigre);
+            }
         }
-        tigerCollect.viewCollection();
+        else {
+            nRand = 2;
+        }
+        tigerExhibit.viewExhibit();
     }
     if (nRand == 2){
         cout << "A penguin has given birth!\n" << endl;
         nBabies = Penguin::getnBabies();
         for (int i =0; i < nBabies;i++){
             Penguin pinguino(0);
-            penguinCollect.acquireAnimal(pinguino);
+            penguinExhibit.acquireAnimal(pinguino);
         }
-        penguinCollect.viewCollection();
+        penguinExhibit.viewExhibit();
     }
     if (nRand == 3){
         cout << "A turtle has given birth!\n" << endl;
         nBabies = Turtle::getnBabies();
         for (int i = 0; i < nBabies; i++){
             Turtle tortuga(0);
-            turtleCollect.acquireAnimal(tortuga);
+            turtleExhibit.acquireAnimal(tortuga);
         }
-        turtleCollect.viewCollection();
+        turtleExhibit.viewExhibit();
     }
 }
 
@@ -252,8 +257,8 @@ void Zoo::showBankBalance(){
 
 double Zoo::getTodaysPayoff(){
     double totalPayoff = 0;
-    totalPayoff += tigerCollect.animalPayoff();
-    totalPayoff += turtleCollect.animalPayoff();
-    totalPayoff += penguinCollect.animalPayoff();
+    totalPayoff += tigerExhibit.animalPayoff();
+    totalPayoff += turtleExhibit.animalPayoff();
+    totalPayoff += penguinExhibit.animalPayoff();
     return totalPayoff;
 }

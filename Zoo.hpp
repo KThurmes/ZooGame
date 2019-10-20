@@ -2,7 +2,7 @@
 #define ZOO_HPP
 
 #include "BankAccount.hpp"
-#include "Collection.hpp"
+#include "Exhibit.hpp"
 #include "Animal.hpp"
 #include "Tiger.hpp"
 #include "Turtle.hpp"
@@ -13,9 +13,9 @@ class Zoo{
     private:
 
         BankAccount account;
-        Collection tigerCollect;
-        Collection penguinCollect;
-        Collection turtleCollect;
+        Exhibit tigerExhibit;
+        Exhibit penguinExhibit;
+        Exhibit turtleExhibit;
     
     public:
         int getTotalAnimals();
@@ -23,8 +23,8 @@ class Zoo{
         void addPenguin(Animal&);
         void addTurtle(Animal&);
         Zoo();
-        Collection getTigerCollection(){
-            return tigerCollect;
+        Exhibit getTigerExhibit(){
+            return tigerExhibit;
         }
         void freeTheAnimals();
         void allAnimalsAge();

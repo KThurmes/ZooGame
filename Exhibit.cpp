@@ -1,4 +1,4 @@
-#include "Collection.hpp"
+#include "Exhibit.hpp"
 #include "Animal.hpp"
 #include "Tiger.hpp"
 #include "Turtle.hpp"
@@ -8,40 +8,40 @@
 using std::endl;
 using std::cout;
 
-Collection::Collection(){
+Exhibit::Exhibit(){
     nAnimals = 0;
     arraySize = 10;
-    collect = new Animal[arraySize];
+    exhib = new Animal[arraySize];
     
 }
 
-void Collection::resizeArray(){
+void Exhibit::resizeArray(){
 
-    cout<< "Collection array is being resized!" <<endl;
+    cout<< "Exhibit array is being resized!" <<endl;
     
     int newSize = arraySize * 2;
 
     //Create new array with double capacity
-    Animal* newCollect = new Animal[newSize];
+    Animal* newExhib = new Animal[newSize];
     
     //Copy all animals into it
     for (int i = 0; i < nAnimals; i++){
-        newCollect[i] = collect[i];
+        newExhib[i] = exhib[i];
     }
 
-    //Delete the array collect used to point to
-    delete[] collect;
+    //Delete the array exhib used to point to
+    delete[] exhib;
 
-    //Reassign collect pointer to point to new array
-    collect = newCollect;
+    //Reassign exhib pointer to point to new array
+    exhib = newExhib;
     arraySize = newSize;
 }
 
-void Collection::animalDies(int index){
+void Exhibit::animalDies(int index){
 
     //Overwrite dead animal by copying last animal in array into the space of the one that died
     if (nAnimals > 1){
-        collect[index] = collect[nAnimals-1];
+        exhib[index] = exhib[nAnimals-1];
     }
 
     //Don't resize
@@ -50,70 +50,70 @@ void Collection::animalDies(int index){
     nAnimals --;
 }
 
-void Collection::animalDies(){
+void Exhibit::animalDies(){
     srand(time(NULL));
     int nRand = (rand() % nAnimals);
     animalDies(nRand);    
 }
 
-void Collection::acquireAnimal(Animal newGuy){
+void Exhibit::acquireAnimal(Animal newGuy){
     if (nAnimals == arraySize){
         resizeArray();
     }
 
     //Copy the new animal into nAnimals index of array.
-    collect[nAnimals] = newGuy;
+    exhib[nAnimals] = newGuy;
 
     nAnimals++;
 }
 
-void Collection::viewCollection(){
-    cout << nAnimals << " animals in collection.\n";
+void Exhibit::viewExhibit(){
+    cout << nAnimals << " animals in Exhibit.\n";
     cout << "Array of size " << arraySize << endl;;
     Animal steve;
     for (int i = 0; i < nAnimals; i++){
-        steve = collect[i];
+        steve = exhib[i];
         cout << "Animal " << i+1 << ":"<< endl;
         cout << "Age: " << steve.getAge() << endl;
     }
 }
 
-void Collection::freeTheAnimals(){
-    delete[] collect;
+void Exhibit::freeTheAnimals(){
+    delete[] exhib;
 }
 
-void Collection::animalsAge(){
+void Exhibit::animalsAge(){
     for (int i = 0 ; i < nAnimals; i++){
-        collect[i].ageOneDay();
+        exhib[i].ageOneDay();
     }
 }
 
-double Collection::animalFoodCost(){
+double Exhibit::animalFoodCost(){
     double runningTotal = 0;
     for (int i = 0 ; i < nAnimals; i++){
-        runningTotal += collect[i].getFoodCost();
+        runningTotal += exhib[i].getFoodCost();
     }
     return runningTotal;
 }
 
-double Collection::animalPayoff(){
+double Exhibit::animalPayoff(){
     double runningTotal = 0;
     for(int i = 0; i < nAnimals; i++){
-        runningTotal += collect[i].getPayoff();
+        runningTotal += exhib[i].getPayoff();
     }
     return runningTotal;
 }
 
-int Collection::hayAdulto(){
+int Exhibit::hayAdulto(){
     int adult = 0;
     for (int i = 0; i < nAnimals; i++){
-        if (collect[i].isAdult()){
+        if (exhib[i].isAdult()){
             adult++;
         }
     }
     return adult;
 }
 
-int Collection::getnAnimals(){
+int Exhibit::getnAnimals(){
     return nAnimals;
 }

@@ -4,7 +4,7 @@
 #include "Turtle.hpp"
 #include "Zoo.hpp"
 #include <iostream>
-#include "Collection.hpp"
+#include "Exhibit.hpp"
 
 using std::cout;
 using std::endl;

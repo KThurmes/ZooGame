@@ -1,24 +1,24 @@
-#ifndef COLLECTION_HPP
-#define COLLECTION_HPP
+#ifndef EXHIBIT_HPP
+#define EXHIBIT_HPP
 
 #include "Animal.hpp"
 #include "Tiger.hpp"
 #include "Turtle.hpp"
 #include "Penguin.hpp"
 
-class Collection{
+class Exhibit{
     private:
         int nAnimals;
         int arraySize;
-        Animal* collect;
+        Animal* exhib;
         void resizeArray();
 
     public:
-        Collection();
+        Exhibit();
         void animalDies(int index);
         void animalDies();
         void acquireAnimal(Animal);
-        void viewCollection();
+        void viewExhibit();
         void freeTheAnimals();
         void animalsAge();
         double animalFoodCost();

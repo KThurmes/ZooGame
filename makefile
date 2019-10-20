@@ -7,9 +7,9 @@ CXXFLAGS = -std=c++11
 CXXFLAGS += -Wall
 CXXFLAGS += -pedantic-errors
 CXXFLAGS += -g
-OBJS = main.o Animal.o Collection.o Zoo.o Tiger.o Turtle.o Penguin.o getNumberBetween.o
+OBJS = main.o Animal.o Exhibit.o Zoo.o Tiger.o Turtle.o Penguin.o getNumberBetween.o
 SRCS = *.cpp
-HEADERS = Animal.hpp BankAccount.hpp Collection.hpp Penguin.hpp Tiger.hpp Turtle.hpp Zoo.hpp getNumberBetween.hpp
+HEADERS = Animal.hpp BankAccount.hpp Exhibit.hpp Penguin.hpp Tiger.hpp Turtle.hpp Zoo.hpp getNumberBetween.hpp
 #LDFLAGS = -lboost_date_time (any libraries you want to link)
 
 proj1: ${OBJS} ${HEADERS}
