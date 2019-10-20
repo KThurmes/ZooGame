@@ -37,6 +37,9 @@ class Animal{
         double getPayoff(){
             return payoff;
         }
+        int getnBabies(){
+            return nBabies;
+        }
 
 };
 

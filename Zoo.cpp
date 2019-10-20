@@ -92,10 +92,10 @@ double Zoo::getTotalFoodCost(){
 
 void Zoo::zooMorning(int day){
     allAnimalsAge();
-    cout << "\n--------Day " <<day <<"--------\n";
+    cout << "\n--------Day " << day <<"--------\n";
     cout << "Good morning!\n";
     double foodCost = getTotalFoodCost();
-    cout << "Your food cost for today is $" << foodCost <<"."<<endl;
+    cout << "Your food cost for today is $" << foodCost << "."<<endl;
     account.makeWithdrawal(foodCost);
     showBankBalance();
     cout << "----------------------------\n";
@@ -106,8 +106,7 @@ void Zoo::zooEvent(){
     //Accessed 10.17.19
     srand(time(NULL));
     //int nRand = (rand() % 4) + 1;
-    //int nRand = 1; //testing death event
-    int nRand = 2; //testing attendance event
+    int nRand = 3; //testing attendance event
     switch(nRand){
         case 1: sicknessEvent();
         break;
@@ -206,6 +205,37 @@ void Zoo::attendanceEvent(){
 
 void Zoo::birthEvent(){
     cout << "Please welcome a new critter!\n";
+    srand(time(NULL));
+    int nRand = (rand() % 3) + 1;
+    int nBabies = 0;
+    //###This assumes that there is at least one adult of every animal
+    if (nRand == 1){
+        cout << "A tiger has given birth!\n" << endl;
+        nBabies = Tiger::getnBabies();
+        for (int i = 0; i <nBabies; i++){
+            Tiger tigre(0);
+            tigerCollect.acquireAnimal(tigre);
+        }
+        tigerCollect.viewCollection();
+    }
+    if (nRand == 2){
+        cout << "A penguin has given birth!\n" << endl;
+        nBabies = Penguin::getnBabies();
+        for (int i =0; i < nBabies;i++){
+            Penguin pinguino(0);
+            penguinCollect.acquireAnimal(pinguino);
+        }
+        penguinCollect.viewCollection();
+    }
+    if (nRand == 3){
+        cout << "A turtle has given birth!\n" << endl;
+        nBabies = Turtle::getnBabies();
+        for (int i = 0; i < nBabies; i++){
+            Turtle tortuga(0);
+            turtleCollect.acquireAnimal(tortuga);
+        }
+        turtleCollect.viewCollection();
+    }
 }
 
 void Zoo::showAnimalCosts(){

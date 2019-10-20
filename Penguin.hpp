@@ -6,6 +6,7 @@ class Penguin : public Animal{
 
 private:
     static double cost;
+    static int nBabies;
 public:
 
     Penguin(int years){
@@ -16,5 +17,6 @@ public:
     }
 
     static double getCost();
+    static int getnBabies();
 };
 #endif
