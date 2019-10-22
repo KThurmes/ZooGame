@@ -10,12 +10,9 @@ using std::cout;
 using std::endl;
 
 int main(){
-    Animal mammal;
-    Tiger tigre(3);
     Zoo z;
-    z.zooSetup();
-    z.zooDay(1);
-    z.freeTheAnimals();
+    cout << "Zoo is completed\n";
+    z.startNewExhibit();
 
     return 0;
 }

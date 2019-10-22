@@ -12,7 +12,7 @@ Exhibit::Exhibit(){
     nAnimals = 0;
     arraySize = 10;
     exhib = new Animal[arraySize];
-    
+    cout << "New exhibit is being created!\n";
 }
 
 void Exhibit::resizeArray(){
@@ -56,14 +56,13 @@ void Exhibit::animalDies(){
     animalDies(nRand);    
 }
 
-void Exhibit::acquireAnimal(Animal newGuy){
+void Exhibit::acquireAnimal(Animal& newGuy){
     if (nAnimals == arraySize){
         resizeArray();
     }
 
     //Copy the new animal into nAnimals index of array.
     exhib[nAnimals] = newGuy;
-
     nAnimals++;
 }
 
@@ -116,4 +115,8 @@ int Exhibit::hayAdulto(){
 
 int Exhibit::getnAnimals(){
     return nAnimals;
+}
+
+Animal Exhibit::getAnimal(int index){
+    return exhib[index];
 }

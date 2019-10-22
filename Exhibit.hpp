@@ -17,7 +17,7 @@ class Exhibit{
         Exhibit();
         void animalDies(int index);
         void animalDies();
-        void acquireAnimal(Animal);
+        void acquireAnimal(Animal&);
         void viewExhibit();
         void freeTheAnimals();
         void animalsAge();
@@ -25,7 +25,8 @@ class Exhibit{
         double animalPayoff();
         int hayAdulto();
         int getnAnimals();
-
+        void animalBirth();
+        Animal getAnimal(int);
 
 };
 

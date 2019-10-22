@@ -7,25 +7,27 @@
 #include "Tiger.hpp"
 #include "Turtle.hpp"
 #include "Penguin.hpp"
+#include "Collection.hpp"
 
 class Zoo{
 
     private:
 
+        Collection collect;
         BankAccount account;
-        Exhibit tigerExhibit;
+/*      Exhibit tigerExhibit;
         Exhibit penguinExhibit;
-        Exhibit turtleExhibit;
+        Exhibit turtleExhibit; */
     
     public:
-        int getTotalAnimals();
+        Zoo();
+        //int getTotalAnimals();
         void addTiger(Animal&);
         void addPenguin(Animal&);
         void addTurtle(Animal&);
-        Zoo();
-        Exhibit getTigerExhibit(){
+/*         Exhibit getTigerExhibit(){
             return tigerExhibit;
-        }
+        } */
         void freeTheAnimals();
         void allAnimalsAge();
         void zooSetup();
@@ -41,6 +43,7 @@ class Zoo{
         void zooDay(int day);
         void animalPurchase();
         double getTodaysPayoff();
+        void startNewExhibit();
         
 };
 
