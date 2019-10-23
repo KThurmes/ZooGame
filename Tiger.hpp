@@ -5,18 +5,19 @@
 
 class Tiger:public Animal{
     private:
-    static double cost;
-    static int nBabies;
+        double foodCost;
     public:
-
         Tiger(int years){
-            foodCost = baseFoodCost * 5;
-            //nBabies = 1;
-            payoff = 0.2 * cost;
             age = years;
+            cost = 10000;
+            foodCost = baseFoodCost * 5;
+            nBabies = 1;
+            payoff = 0.2 * cost;
         }
-
-        static double getCost();
-        static int getnBabies();
+        string getName();
+        double getFoodCost(){
+            return foodCost;
+        };
+        ~Tiger(){};
 };
 #endif

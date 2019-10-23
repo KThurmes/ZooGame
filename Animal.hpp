@@ -1,21 +1,25 @@
 #ifndef ANIMAL_HPP
 #define ANIMAL_HPP
+#include <string>
+using std::string;
+
 
 class Animal{
     protected:
         int age;
+        double cost;
         int nBabies;
-        //double cost;
         static double baseFoodCost;
-        double foodCost;
         double payoff;
     public:
+        virtual string getName() {
+            return "animal";
+        };
         Animal(){
             age = -1;
             //cost = 0;
             nBabies = 0;
             baseFoodCost = 10; 
-            foodCost = 0;
             payoff = 0;
         }
         void ageOneDay(){
@@ -30,17 +34,20 @@ class Animal{
             return age;
         }
 
-        double getFoodCost(){
-            return foodCost;
-        }
-
         double getPayoff(){
             return payoff;
         }
         int getnBabies(){
             return nBabies;
         }
+        double getCost(){
+            return cost;
+        }
 
+        virtual double getFoodCost(){
+            return baseFoodCost;
+        }
+        virtual ~Animal(){};
 };
 
 #endif

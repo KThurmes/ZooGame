@@ -11,18 +11,15 @@ using std::cout;
 Exhibit::Exhibit(){
     nAnimals = 0;
     arraySize = 10;
-    exhib = new Animal[arraySize];
-    cout << "New exhibit is being created!\n";
+    exhib = new Animal*[arraySize];
 }
 
 void Exhibit::resizeArray(){
-
-    cout<< "Exhibit array is being resized!" <<endl;
     
     int newSize = arraySize * 2;
 
     //Create new array with double capacity
-    Animal* newExhib = new Animal[newSize];
+    Animal** newExhib = new Animal*[newSize];
     
     //Copy all animals into it
     for (int i = 0; i < nAnimals; i++){
@@ -41,6 +38,7 @@ void Exhibit::animalDies(int index){
 
     //Overwrite dead animal by copying last animal in array into the space of the one that died
     if (nAnimals > 1){
+        delete exhib[index];
         exhib[index] = exhib[nAnimals-1];
     }
 
@@ -56,7 +54,7 @@ void Exhibit::animalDies(){
     animalDies(nRand);    
 }
 
-void Exhibit::acquireAnimal(Animal& newGuy){
+void Exhibit::acquireAnimal(Animal* newGuy){
     if (nAnimals == arraySize){
         resizeArray();
     }
@@ -69,28 +67,31 @@ void Exhibit::acquireAnimal(Animal& newGuy){
 void Exhibit::viewExhibit(){
     cout << nAnimals << " animals in Exhibit.\n";
     cout << "Array of size " << arraySize << endl;;
-    Animal steve;
+    Animal* steve;
     for (int i = 0; i < nAnimals; i++){
         steve = exhib[i];
         cout << "Animal " << i+1 << ":"<< endl;
-        cout << "Age: " << steve.getAge() << endl;
+        cout << "Age: " << steve->getAge() << endl;
     }
 }
 
 void Exhibit::freeTheAnimals(){
+    for(int i = 0 ; i < nAnimals; i++){
+        delete exhib[i];
+    }
     delete[] exhib;
 }
 
 void Exhibit::animalsAge(){
     for (int i = 0 ; i < nAnimals; i++){
-        exhib[i].ageOneDay();
+        exhib[i]->ageOneDay();
     }
 }
 
 double Exhibit::animalFoodCost(){
     double runningTotal = 0;
     for (int i = 0 ; i < nAnimals; i++){
-        runningTotal += exhib[i].getFoodCost();
+        runningTotal += exhib[i]->getFoodCost();
     }
     return runningTotal;
 }
@@ -98,7 +99,7 @@ double Exhibit::animalFoodCost(){
 double Exhibit::animalPayoff(){
     double runningTotal = 0;
     for(int i = 0; i < nAnimals; i++){
-        runningTotal += exhib[i].getPayoff();
+        runningTotal += exhib[i]->getPayoff();
     }
     return runningTotal;
 }
@@ -106,7 +107,7 @@ double Exhibit::animalPayoff(){
 int Exhibit::hayAdulto(){
     int adult = 0;
     for (int i = 0; i < nAnimals; i++){
-        if (exhib[i].isAdult()){
+        if (exhib[i]->isAdult()){
             adult++;
         }
     }
@@ -117,6 +118,6 @@ int Exhibit::getnAnimals(){
     return nAnimals;
 }
 
-Animal Exhibit::getAnimal(int index){
+Animal* Exhibit::getAnimal(int index){
     return exhib[index];
 }

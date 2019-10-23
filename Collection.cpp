@@ -4,14 +4,22 @@ using std::cout;
 using std::endl;
 
 Collection::Collection(){
-    nExhibits = 0;
+    nExhibits = 3;
     arraySize = 3;
     collect = new Exhibit[arraySize];
+    Tiger* tigre = new Tiger(0);
+    Penguin* pinguino= new Penguin(0);
+    Turtle* tortuga = new Turtle(0);
+
+    prototypes[0] = tigre;
+    prototypes[1] = pinguino;
+    prototypes[2] = tortuga;
+    //prototypes[3] = &whatever;
 }
 
 int Collection::getnAnimals(){
     int nAnimals = 0;
-    for(int i = 0; i < nExhibits; i++){
+    for (int i = 0; i < nExhibits; i++){
         nAnimals += collect[i].getnAnimals();
     }
     return nAnimals;
@@ -64,18 +72,21 @@ void Collection::resizeArray(){
 void Collection::acquireAnimal(int age, int index){
     if (index == 0){
         //make a new tiger
-        Tiger tigre(age);
+        Tiger* tigre;
+        tigre = new Tiger(age);
 
         //send it into the appropriate exhibit
         collect[index].acquireAnimal(tigre);
     }
     if (index == 1){
-        Penguin pinguino(age);
+        Penguin* pinguino;
+        pinguino = new Penguin(age);
         collect[index].acquireAnimal(pinguino);
     }
 
     if (index == 2){
-        Turtle tortuga(age);
+        Turtle* tortuga;
+        tortuga = new Turtle(age);
         collect[index].acquireAnimal(tortuga);
     }
 }
@@ -86,7 +97,7 @@ void Collection::animalsAge(){
     }
 }
 
-bool Collection::animalDies(){
+int Collection::animalDies(){
     int nAnimals = getnAnimals();
     if (nAnimals > 0){
         //Choose random number between 1 and nAnimals. 
@@ -104,14 +115,14 @@ bool Collection::animalDies(){
             nRand -= animalsInExhibit;
             i++;
         }
-        return 1;
+        return i;
     }
     else{
         return 0;
     }
 }
 
-bool Collection::animalBirth(){
+int Collection::animalBirth(){
     if (!hayAdulto()){
         return 0;
     }
@@ -127,11 +138,11 @@ bool Collection::animalBirth(){
     }
 
     //There will be at least one adult animal in the chosen exhibit.
-    int nBabies = collect[nRand].getAnimal(0).getnBabies();
+    int nBabies = prototypes[nRand]->getnBabies();
     for (int i = 0; i < nBabies; i++){
         acquireAnimal(0, nRand);
     }
-    return 1;
+    return (nRand + 1);
 }
 
 void Collection::freeTheAnimals(){
@@ -139,6 +150,9 @@ void Collection::freeTheAnimals(){
         collect[i].freeTheAnimals();
     }
     delete[] collect;
+    for( int i = 0; i < 3; i++){
+        delete prototypes[i];
+    }
 }
 
 double Collection::animalPayoff(){
@@ -153,3 +167,20 @@ int Collection::getnTigers(){
     return collect[0].getnAnimals();
 }
 
+string Collection::animalName(int index){
+    string animalName = prototypes[index]->getName();
+    return animalName;
+}
+
+void Collection::showCollection(){
+    cout << "Tigers: \n";
+    collect[0].viewExhibit();
+    cout << "\nPenguins: \n";
+    collect[1].viewExhibit();
+    cout << "\nTurtles: \n";
+    collect[2].viewExhibit();
+}
+
+Animal* Collection::getPrototype(int index){
+    return prototypes[index];
+}

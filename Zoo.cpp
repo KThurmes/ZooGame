@@ -8,42 +8,26 @@
 #include "getNumberBetween.hpp"
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 using std::cout;
 using std::endl;
+using std::string;
 
 
 Zoo::Zoo(){
+    dailyIncome = 0;
 }
 
 void Zoo::startNewExhibit(){
     collect.addExhibit();
 }
 
-/* void Zoo::addTiger(Animal& tigre){
-    tigerExhibit.acquireAnimal(tigre);
+void Zoo::freeTheAnimals(){
+    collect.freeTheAnimals();
+    cout<< "Freeing the zoo!\n";
 }
 
-void Zoo::addPenguin(Animal& pinguino){
-    penguinExhibit.acquireAnimal(pinguino);
-}
-
-void Zoo::addTurtle(Animal& tortuga){
-    turtleExhibit.acquireAnimal(tortuga);
-}*/
-
-/*void Zoo::freeTheAnimals(){
-    tigerExhibit.freeTheAnimals();
-    penguinExhibit.freeTheAnimals();
-    turtleExhibit.freeTheAnimals();
-}*/
-
-/*void Zoo::allAnimalsAge(){
-    tigerExhibit.animalsAge();
-    penguinExhibit.animalsAge();
-    turtleExhibit.animalsAge();
-}
-*/
 void Zoo::zooSetup(){
     
     //Show animal costs
@@ -52,7 +36,7 @@ void Zoo::zooSetup(){
     showBankBalance();
 
     //Ask how many Tigers player would like to buy
-    cout << "How many tigers would you like to start your zoo with?\n";
+    cout << "\nHow many tigers would you like to start your zoo with?\n";
     int nTigers = getNumberBetween(1,2);
     
     //Add animals to Exhibit
@@ -60,7 +44,7 @@ void Zoo::zooSetup(){
         collect.acquireAnimal(1, 0);
     }
     //Withdraw money
-    account.makeWithdrawal(Tiger::getCost()*nTigers);
+    account.makeWithdrawal(collect.getPrototype(0)->getCost()*nTigers);
 
 
     //Ask how many Penguins player would like to buy
@@ -72,38 +56,32 @@ void Zoo::zooSetup(){
         collect.acquireAnimal(1, 1);
     }   
     //Withdraw money
-    account.makeWithdrawal(Penguin::getCost()*nPenguins);
+    account.makeWithdrawal(collect.getPrototype(1)->getCost()*nPenguins);
 
     //Ask how many Turtles player would like to buy
     cout << "How many turtles would you like to start your zoo with?\n";
     int nTurtles = getNumberBetween(1,2);
     
+    
     //Add animals to Exhibit
     for (int i = 0; i < nTurtles; i++){
         collect.acquireAnimal(1, 2);
     }   
+    collect.showCollection();
+    cout <<"Made it!";
     //Withdraw money
-    account.makeWithdrawal(Turtle::getCost()*nTurtles);
+    account.makeWithdrawal(collect.getPrototype(2)->getCost()*nTurtles);
 }
-/*
 
-double Zoo::getTotalFoodCost(){
-    double totalCost = 0;
-    totalCost += tigerExhibit.animalFoodCost();
-    totalCost += turtleExhibit.animalFoodCost();
-    totalCost += penguinExhibit.animalFoodCost();
-    return totalCost;
-}
-*/
 void Zoo::zooMorning(int day){
     collect.animalsAge();
-    cout << "\n--------Day " << day <<"--------\n";
+    cout << "\n------------Day " << day <<"-------------\n";
     cout << "Good morning!\n";
     double foodCost = collect.getAnimalFoodCost();
     cout << "Your food cost for today is $" << foodCost << "."<<endl;
     account.makeWithdrawal(foodCost);
     showBankBalance();
-    cout << "----------------------------\n";
+    cout << "-------------------------------\n";
 }
 
 void Zoo::zooEvent(){
@@ -125,10 +103,11 @@ void Zoo::zooEvent(){
             cout << "It was a quiet day at the zoo...\n";
         break;
     }
-    cout << "-----------------------------\n";
+    cout << "-------------------------------\n";
 }
 
 void Zoo::zooDay(int day){
+    dailyIncome = 0;
     zooMorning(day);
     zooEvent();
     zooEvening();
@@ -141,39 +120,56 @@ void Zoo::zooDay(int day){
 }
 
 void Zoo::animalPurchase(){
-    cout << "Great! You're purchasing an animal!\nWhich critter would you like to purchase?\n1. Tiger\n2. Penguin\n3. Turtle\n";
+    cout << "\nGreat! You're purchasing an animal!\n";
+    showAnimalCosts();
+    cout << "Which critter would you like to purchase?\n1. Tiger\n2. Penguin\n3. Turtle\n";
     int choice = getNumberBetween(1, 3);
     if (choice == 1){
         collect.acquireAnimal(3,0);
-        account.makeWithdrawal(Tiger::getCost());
+        account.makeWithdrawal(collect.getPrototype(0)->getCost());
     }
     if (choice == 2){
         collect.acquireAnimal(3,1);
-        account.makeWithdrawal(Penguin::getCost());
+        account.makeWithdrawal(collect.getPrototype(1)->getCost());
     }
     if (choice == 3){
         collect.acquireAnimal(3,2);
-        account.makeWithdrawal(Turtle::getCost());
+        account.makeWithdrawal(collect.getPrototype(2)->getCost());
     }
+
+    string animalName = collect.animalName(choice-1);
+    cout << "\nCongratulations on your shiny new adult " << animalName << "!\n";
 }
 
 void Zoo::zooEvening(){
-    cout << "\nTime to close up for the day!\n";
+    cout << "Time to close up for the day!\n";
     double payoff = collect.animalPayoff();
-    account.makeDeposit(payoff);
-    cout << "Today's profit: $" << payoff << endl;
+    dailyIncome += payoff;
+    cout << "Today's profit: $" << dailyIncome << endl;
+    account.makeDeposit(dailyIncome);
     showBankBalance();
+    cout << "-------------------------------\n";
     cout << "\nWould you like to purchase an adult animal?\n1. Yes\n2. No\n";
     int choice = getNumberBetween(1, 2);
     if (choice == 1){
         animalPurchase();
     }
-    cout << "Good night!\n";
+    cout << "Good night!\n\n";
 }
 
 void Zoo::sicknessEvent(){
-    cout << "Oh no! Your critter got sick and died!\n";
-    collect.animalDies();
+    int deadAnimal = collect.animalDies();
+    string animalName;
+
+    //If there aren't any animals in the zoo
+    if (deadAnimal == 0){
+        cout << "It was a quiet day at the zoo...\n";
+    }
+    //Otherwise, an animal dies.
+    else {
+        animalName = collect.animalName(deadAnimal-1);
+        cout << "Oh no! A " << animalName << " got sick and died!\n";
+    }
 }
 
 void Zoo::attendanceEvent(){
@@ -185,32 +181,29 @@ void Zoo::attendanceEvent(){
         totalBonus += (rand() % 250) + 250;
     }
     cout << "Your zoo has received a bonus of $" << totalBonus <<"!\n";
-    account.makeDeposit(totalBonus);
+    dailyIncome += totalBonus;
+    //account.makeDeposit(totalBonus);
 }
 
-
 void Zoo::birthEvent(){
-    cout << "Please welcome a new critter!\n";
-    collect.animalBirth();
+    int animalID = collect.animalBirth();
+    if(animalID == 0){
+        cout << "It was a quiet day at the zoo...\n";
+    }
+    else{
+        string animalName = collect.animalName(animalID-1);
+        cout << "An " << animalName << " has given birth!\n";
+    }
 }
 
 void Zoo::showAnimalCosts(){
-    cout << "\n\n---Animal Price List---\n";
-    cout << "Tigers: $" << Tiger::getCost() << endl;
-    cout << "Penguins: $" << Penguin::getCost() << endl;
-    cout << "Turtles: $" << Turtle::getCost() << endl;
-    cout << "------------------------\n\n";
+    cout << "\n\n-------Animal Price List-------\n";
+    cout << "Tigers: $" << collect.getPrototype(0)->getCost() << endl;
+    cout << "Penguins: $" << collect.getPrototype(1)->getCost() << endl;
+    cout << "Turtles: $" << collect.getPrototype(2)->getCost() << endl;
+    cout << "-------------------------------\n\n";
 }
 
 void Zoo::showBankBalance(){
     cout << "The zoo has a bank balance of $" << account.getBalance()<< "."<<endl;
 }
-/*
-double Zoo::getTodaysPayoff(){
-    double totalPayoff = 0;
-    totalPayoff += tigerExhibit.animalPayoff();
-    totalPayoff += turtleExhibit.animalPayoff();
-    totalPayoff += penguinExhibit.animalPayoff();
-    return totalPayoff;
-} */
-

@@ -11,8 +11,8 @@ using std::endl;
 
 int main(){
     Zoo z;
-    cout << "Zoo is completed\n";
-    z.startNewExhibit();
-
+    z.zooSetup();
+    z.zooDay(1);
+    z.freeTheAnimals();
     return 0;
 }

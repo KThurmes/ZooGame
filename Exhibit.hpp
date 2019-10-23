@@ -10,14 +10,14 @@ class Exhibit{
     private:
         int nAnimals;
         int arraySize;
-        Animal* exhib;
+        Animal** exhib;
         void resizeArray();
 
     public:
         Exhibit();
         void animalDies(int index);
         void animalDies();
-        void acquireAnimal(Animal&);
+        void acquireAnimal(Animal*);
         void viewExhibit();
         void freeTheAnimals();
         void animalsAge();
@@ -26,7 +26,7 @@ class Exhibit{
         int hayAdulto();
         int getnAnimals();
         void animalBirth();
-        Animal getAnimal(int);
+        Animal* getAnimal(int);
 
 };
 

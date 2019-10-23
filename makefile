@@ -22,4 +22,4 @@ clean:
 	rm *.o proj2
 
 valgrind:
-	valgrind proj2
+	valgrind --leak-check=full proj2

@@ -5,18 +5,20 @@
 class Penguin : public Animal{
 
 private:
-    static double cost;
-    static int nBabies;
+
 public:
 
     Penguin(int years){
-        foodCost = baseFoodCost;
+        age = years;
+        cost = 1000;
+
         nBabies = 5;
         payoff = 0.1 * cost;
-        age = years;
     }
-
-    static double getCost();
-    static int getnBabies();
+    string getName();
+    double getFoodCost(){
+        return baseFoodCost;
+    }
+    ~Penguin(){};
 };
 #endif
