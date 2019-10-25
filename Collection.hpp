@@ -1,3 +1,6 @@
+/* Description: a Collection object represents a gouping of exhibits. Each of the exhibits contains an array of pointers to animals. Each of the exhibits contains only one type of animal. The class contains a data member to hold the exhibits, an int that represents the number of exhibits, an int that represents the capacity of the array holding the exhibits, and an array of animals that represent a "prototype" animal of each species that can be accessed even when there are no instances of that animal present int he zoo.
+
+*/
 #ifndef COLLECTION_HPP
 #define COLLECTION_HPP
 

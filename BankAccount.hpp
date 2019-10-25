@@ -1,3 +1,7 @@
+/* 
+Description: BankAccount is a simple class that manages a bank account. It contains a data member to store the current balance. It contains methods that make deposits, make withdrawals, and get the current balance. A new bank account is initialized to start with $10,000 
+*/
+
 #ifndef BANKACCOUNT_HPP
 #define BANKACCOUNT_HPP
 
