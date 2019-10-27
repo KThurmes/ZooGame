@@ -35,7 +35,6 @@ public:
     void makeWithdrawal(double amount)
     {
         balance -= amount;
-        cout << "Withdrawing $" << amount << endl;
     }
 };
 
